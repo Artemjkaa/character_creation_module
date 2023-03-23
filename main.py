@@ -55,6 +55,31 @@ class Healer(Character):
     SPECIAL_SKILL = 'Защита'
 
 
+def start_training(character):
+    
+    game_commands = {'attack': Character.attack, 
+                'defence': Character.defence, 
+                'special' : Character.special}
+    
+    print('Потренируйся управлять своими навыками.')
+    print('Введи одну из команд: attack — чтобы атаковать противника, '
+          'defence — чтобы блокировать атаку противника или '
+          'special — чтобы использовать свою суперсилу.')
+    print('Если не хочешь тренироваться, введи команду skip.')
+    
+    cmd = None
+    
+    while cmd != 'skip':
+        cmd = input('Введи команду: ')
+        if cmd in game_commands.keys():
+            training: Character = game_commands[cmd](char_class)
+            print(training)
+        else:
+            print('Вы ввели неправильную команду')
+            
+    return (f'Тренировка завершена')
+
+
 def choice_char_class(char_name: str) -> Character:
     
     game_classes = {'warrior': Warrior, 'mage': Mage, 'healer': Healer}
@@ -74,30 +99,6 @@ def choice_char_class(char_name: str) -> Character:
                                'чтобы выбрать другого персонажа ').lower()
     return char_class 
     
-def start_training(Character):
-    
-    game_commands = {'attack': Character.attack, 
-                'defence': Character.defence, 
-                'special' : Character.special}
-    
-    print('Потренируйся управлять своими навыками.')
-    print('Введи одну из команд: attack — чтобы атаковать противника, '
-          'defence — чтобы блокировать атаку противника или '
-          'special — чтобы использовать свою суперсилу.')
-    print('Если не хочешь тренироваться, введи команду skip.')
-    
-    cmd = None
-    
-    while cmd != 'skip':
-        cmd = input('Введи команду: ')
-        if cmd in game_commands.values():
-            training : Character = game_commands[cmd]()
-            print(training)
-        else:
-            print('Вы ввели неправильную команду')
-            
-    return (f'Тренировка завершена')
-
 if __name__ == '__main__':
     run_screensaver()
     print('Приветствую тебя, искатель приключений!')
@@ -107,5 +108,5 @@ if __name__ == '__main__':
           'Сейчас твоя выносливость — 80, атака — 5 и защита — 10.')
     print('Ты можешь выбрать один из трёх путей силы:')
     print('Воитель, Маг, Лекарь')
-    char_class: str = choice_char_class()
-    print(start_training(char_name, char_class))
+    char_class: str = choice_char_class(char_name)
+    print(start_training(Character))
