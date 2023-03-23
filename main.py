@@ -1,4 +1,5 @@
 from random import randint
+from graphic_arts.start_game_banner import run_screensaver
 
 DEFAULT_ATTACK = 5
 DEFAULT_DEFENCE = 10
@@ -9,7 +10,7 @@ class Character():
     RANGE_VALUE_DEFENCE = (1, 5)
     SPECIAL_SKILL = 'Удача'
     SPECIAL_BUFF = 15
-    BRIEF_DESC_CHAR_CLASS = 'отважный любитель приключений.'
+    BRIEF_DESC_CHAR_CLASS = 'отважный любитель приключений'
     
     def __init__(self, name):
         self.name = name
@@ -58,7 +59,7 @@ def choice_char_class(char_name: str) -> Character:
     
     game_classes = {'warrior': Warrior, 'mage': Mage, 'healer': Healer}
     
-    approve_choice: str = None
+    approve_choice: str = ''
     
     while approve_choice != 'y':
         selected_class = input('Введи название персонажа, '
@@ -86,12 +87,25 @@ def start_training(Character):
     print('Если не хочешь тренироваться, введи команду skip.')
     
     cmd = None
+    
     while cmd != 'skip':
         cmd = input('Введи команду: ')
         if cmd in game_commands.values():
-            result : Character = game_commands[cmd]()
-            print(result)
+            training : Character = game_commands[cmd]()
+            print(training)
         else:
             print('Вы ввели неправильную команду')
             
     return (f'Тренировка завершена')
+
+if __name__ == '__main__':
+    run_screensaver()
+    print('Приветствую тебя, искатель приключений!')
+    print('Прежде чем начать игру...')
+    char_name: str = input('...назови себя: ')
+    print(f'Здравствуй, {char_name}! '
+          'Сейчас твоя выносливость — 80, атака — 5 и защита — 10.')
+    print('Ты можешь выбрать один из трёх путей силы:')
+    print('Воитель, Маг, Лекарь')
+    char_class: str = choice_char_class()
+    print(start_training(char_name, char_class))
